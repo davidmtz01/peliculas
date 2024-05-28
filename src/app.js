@@ -2,11 +2,11 @@ import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
 import mongoose from 'mongoose'
-import {DB_HOST,DB_DATABASE,DB_PORT} from './config.js'
+import {URL,DB_HOST,DB_DATABASE,DB_PORT} from './config.js'
 import rutasPelicula from './Routes/Pelicula.routes.js'
 import rutasAuth from './Routes/Auth.routes.js'
-const conexion = 'mongodb://'+DB_HOST+':'+DB_PORT+'/'+DB_DATABASE
-mongoose.connect(conexion).then()
+//const conexion = 'mongodb://'+DB_HOST+':'+DB_PORT+'/'+DB_DATABASE
+mongoose.connect(URL).then()
 
 const app = express()
 app.use(cors())
