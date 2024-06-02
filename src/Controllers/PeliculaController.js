@@ -64,17 +64,17 @@ export const updatePelicula = async(req,res) =>{
     }
 }
 
-export const deletePelicula = async(req,res) =>{
-    try{
-        const {id} = req.params
-        await eliminarImagen(id)
-        await PeliculaModel.deleteOne({_id:id})
-        return res.status(200).json({status:true,message:'Pelicula eliminada'})
-    }
-    catch(error){
-        return res.status(500).json({status:false,errors:[error,message]})
+export const deletePelicula = async(req, res) => {
+    try {
+        const { id } = req.params;
+        await eliminarImagen(id);
+        await PeliculaModel.deleteOne({ _id: id });
+        return res.status(200).json({ status: true, message: 'Pelicula eliminada' });
+    } catch (error) {
+        return res.status(500).json({ status: false, errors: [error.message] });
     }
 }
+
 
 const eliminarImagen = async(id) =>{
     const pelicula = await PeliculaModel.findById(id)
