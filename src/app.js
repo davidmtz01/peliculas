@@ -2,11 +2,13 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import { URL, DB_HOST, DB_DATABASE, DB_PORT } from './config.js';
+import { URL } from './config.js';
 import rutasPelicula from './Routes/Pelicula.routes.js';
 import rutasAuth from './Routes/Auth.routes.js';
 
-mongoose.connect(URL).then();
+mongoose.connect(URL, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Conectado a la base de datos'))
+  .catch(err => console.error('Error al conectar a la base de datos:', err));
 
 const app = express();
 
@@ -17,14 +19,24 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
+// Manejo de solicitudes preflight (OPTIONS)
+app.options('*', cors(corsOptions));
+
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.static('public'));
-app.use(rutasPelicula);
-app.use(rutasAuth);
+app.use('/api/peliculas', rutasPelicula);
+app.use('/api/auth', rutasAuth);
 
 app.use((req, res) => {
   res.status(404).json({ status: false, errors: 'Not found' });
 });
 
+// Middleware para manejo de errores global
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ status: false, errors: 'Something went wrong!' });
+});
+
 export default app;
+
