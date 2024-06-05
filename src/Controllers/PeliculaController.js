@@ -95,13 +95,6 @@ const eliminarImagen = async (id) => {
     }
 };
 
-const eliminarImagen = async (id) => {
-    const pelicula = await PeliculaModel.findById(id)
-    const img = pelicula.imagen
-    fs.unlinkSync('./public/'+img)
-};
-   
-
 const validar = (nombre, clasificacion, genero, descripcion, director, img, sevalida) => {
     const errors = [];
     if (!nombre || nombre.trim() === '') {
