@@ -84,10 +84,23 @@ export const deletePelicula = async (req, res) => {
 };
 
 const eliminarImagen = async (id) => {
+    try {
+        const pelicula = await PeliculaModel.findById(id);
+        if (pelicula && pelicula.imagen) {
+            const img = pelicula.imagen;
+            fs.unlinkSync('./public' + img);
+        }
+    } catch (error) {
+        console.error('Error al eliminar la imagen:', error.message);
+    }
+};
+
+const eliminarImagen = async (id) => {
     const pelicula = await PeliculaModel.findById(id)
     const img = pelicula.imagen
     fs.unlinkSync('./public/'+img)
 };
+   
 
 const validar = (nombre, clasificacion, genero, descripcion, director, img, sevalida) => {
     const errors = [];
