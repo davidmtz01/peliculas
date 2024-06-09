@@ -12,7 +12,7 @@ const app = express();
 
 // Configuración de CORS
 const corsOptions = {
-  origin: 'http://localhost:5173', // Permitir solicitudes desde http://localhost:5173
+  ['http://localhost:5173', 'https://peliculas-vue1234.netlify.app'], // Permitir solicitudes desde http://localhost:5173
   credentials: true // Permitir el envío de cookies en las solicitudes
 };
 app.use(cors(corsOptions));
